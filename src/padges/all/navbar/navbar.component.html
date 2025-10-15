@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Navbar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white">
+
+<nav class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <!-- Logo + Toggle -->
+      <div class="flex items-center space-x-4">
+        <div class="flex-shrink-0 text-xl font-bold text-green-600 dark:text-green-400">
+          MyStore
+        </div>
+        <button 
+          (click)="toggleDarkMode()" 
+          class="text-gray-700 dark:text-green-300 hover:text-green-400 transition text-2xl focus:outline-none"
+          type="button"
+        >
+          🌙
+        </button>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-4 items-center">
+        <a routerLink="all" routerLinkActive="bg-green-600 text-white"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">All</a>
+
+        <a routerLink="men" routerLinkActive="bg-green-600 text-white"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">Men</a>
+
+        <a routerLink="woman" routerLinkActive="bg-green-600 text-white"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">Women</a>
+
+        <a routerLink="jewerly" routerLinkActive="bg-green-600 text-white"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">Jewelry</a>
+
+        <a routerLink="electorinc" routerLinkActive="bg-green-600 text-white"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">Electronics</a>
+
+        <!-- Wishlist + Cart -->
+        <div class="flex items-center space-x-3">
+          <!-- Wishlist Icon -->
+          <a routerLink="/heart" class="relative px-2 py-1 text-gray-700 dark:text-gray-200 hover:text-pink-500 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 
+                7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+            <span *ngIf="wishlistCount > 0" class="absolute -top-2 -right-2 bg-pink-600 text-white text-xs rounded-full px-1.5">
+              {{ wishlistCount }}
+            </span>
+          </a>
+
+          <!-- Cart Icon -->
+          <a routerLink="/cart" class="relative px-2 py-1 text-gray-700 dark:text-gray-200 hover:text-green-500 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="20" cy="21" r="1" />
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+            </svg>
+            <span *ngIf="cartCount > 0" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">
+              {{ cartCount }}
+            </span>
+          </a>
+        </div>
+
+        <!-- Logout Button -->
+        <button
+          (click)="logout()"
+          class="ml-4 bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white font-medium transition"
+          type="button"
+        >
+          Logout
+        </button>
+      </div>
+
+      <!-- Mobile Toggle -->
+      <div class="md:hidden">
+        <button (click)="toggleMobileMenu()" class="text-gray-700 dark:text-gray-200 focus:outline-none" type="button">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div *ngIf="mobileMenuOpen" class="md:hidden px-4 pt-2 pb-4 space-y-2 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+    <a routerLink="all" routerLinkActive="bg-green-600 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="block px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">All</a>
+
+    <a routerLink="men" routerLinkActive="bg-green-600 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="block px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">Men</a>
+
+    <a routerLink="woman" routerLinkActive="bg-green-600 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="block px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">Women</a>
+
+    <a routerLink="jewerly" routerLinkActive="bg-green-600 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="block px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">Jewelry</a>
+
+    <a routerLink="electorinc" routerLinkActive="bg-green-600 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="block px-3 py-1 rounded text-gray-700 dark:text-gray-200 hover:text-green-600 font-medium transition">Electronics</a>
+
+    <!-- Wishlist Icon -->
+    <a routerLink="/heart" class="relative block px-3 py-1 text-gray-700 dark:text-gray-200 hover:text-pink-500 transition">
+      ❤️
+      <span *ngIf="wishlistCount > 0" class="absolute -top-2 -right-2 bg-pink-600 text-white text-xs rounded-full px-1.5">
+        {{ wishlistCount }}
+      </span>
+    </a>
+
+    <!-- Cart Icon for Mobile -->
+    <a routerLink="/cart" class="relative block px-3 py-1 text-gray-700 dark:text-gray-200 hover:text-green-500 transition">
+      🛒
+      <span *ngIf="cartCount > 0" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">
+        {{ cartCount }}
+      </span>
+    </a>
+
+    <!-- Logout Button for Mobile -->
+    <button
+      (click)="logout()"
+      class="w-full bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white font-medium transition mt-2"
+      type="button"
+    >
+      Logout
+    </button>
+  </div>
+</nav>
+
+</body>
+</html>

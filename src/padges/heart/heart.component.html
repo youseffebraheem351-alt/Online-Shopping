@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- خليها ثابتة لو عايز الثيم دايمًا دارك -->
+  <head>
+    <meta charset="utf-8" />
+    <title>YourAppName</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans min-h-screen">
+
+    <div class="min-h-screen p-4 sm:p-6 flex justify-center items-center bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+      <div class="w-full max-w-4xl bg-white dark:bg-gray-800 shadow-md rounded-xl p-4 sm:p-6">
+        <h2 class="text-2xl font-bold mb-4 text-center text-green-600 dark:text-green-400">My Wishlist</h2>
+
+        <div *ngIf="wishlist.length === 0" class="text-center text-gray-500 dark:text-gray-400 text-lg">
+          Your wishlist is empty.
+        </div>
+
+        <div *ngIf="wishlist.length > 0" class="flex flex-col gap-4">
+          <div
+            *ngFor="let item of wishlist"
+            class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between shadow-sm hover:shadow-md transition"
+          >
+            <img
+              [src]="item.image"
+              alt="Product Image"
+              class="w-full sm:w-28 h-32 object-contain rounded-lg border mb-4 sm:mb-0 sm:mr-4 border-gray-300 dark:border-gray-600"
+            />
+            <div class="flex-1 text-center sm:text-left">
+              <h3 class="text-lg font-semibold mb-1 line-clamp-2">{{ item.title }}</h3>
+              <p class="text-green-600 font-bold mb-1">${{ item.price }}</p>
+              <p class="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">{{ item.description }}</p>
+            </div>
+
+            <button
+              (click)="removeFromWishlist(item.id)"
+              class="mt-auto bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md text-sm font-semibold transition"
+            >
+              Remove 
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

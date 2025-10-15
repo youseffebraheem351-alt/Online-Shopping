@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans min-h-screen">
+
+<div class="min-h-screen bg-gray-100 p-4 sm:p-6 flex justify-center items-center dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+  <div class="w-full max-w-4xl bg-white dark:bg-gray-800 shadow-md rounded-xl p-4 sm:p-6">
+    <h2 class="text-2xl font-bold mb-4 text-center sm:text-left">Shop Cart:</h2>
+    <p class="text-green-600 font-semibold mb-6 text-center sm:text-left">
+      Total cart price: <span class="font-bold">£{{ getTotal() }}</span>
+    </p>
+
+    <div
+      *ngFor="let item of cartItems; let i = index"
+      class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between mb-4 shadow-sm"
+    >
+      <!-- Image and Info -->
+      <div class="flex flex-col sm:flex-row sm:items-center w-full sm:w-auto">
+        <img
+          [src]="item.image"
+          alt="{{ item.title }}"
+          class="w-full sm:w-28 h-32 object-contain rounded-lg border mb-4 sm:mb-0 sm:mr-4 border-gray-300 dark:border-gray-600"
+        />
+        <div class="text-center sm:text-left">
+          <h3 class="text-lg font-semibold">{{ item.title }}</h3>
+          <p class="text-green-600 font-semibold text-lg">£{{ item.price }}</p>
+          <button
+            (click)="removeItem(i)"
+            class="text-green-600 flex items-center justify-center sm:justify-start mt-2 focus:outline-none"
+          >
+            <!-- SVG Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M9 3V4H4V6H5V19C5 20.1 5.9 21 7 21H17C18.1 21 19 20.1 19 19V6H20V4H15V3H9ZM7 6H17V19H7V6ZM9 8V17H11V8H9ZM13 8V17H15V8H13Z"
+              />
+            </svg>
+            Remove
+          </button>
+        </div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="flex items-center justify-center sm:justify-end mt-4 sm:mt-0">
+        <button
+          (click)="updateQuantity(i, item.quantity + 1)"
+          class="w-10 h-10 bg-white border border-gray-300 rounded text-green-600 text-xl hover:bg-green-100 transition"
+        >
+          +
+        </button>
+        <span class="mx-4 font-medium text-lg">{{ item.quantity }}</span>
+        <button
+          *ngIf="item.quantity > 1"
+          (click)="updateQuantity(i, item.quantity - 1)"
+          class="w-10 h-10 bg-white border border-gray-300 rounded text-green-600 text-xl hover:bg-green-100 transition"
+        >
+          −
+        </button>
+      </div>
+    </div>
+
+    <!-- Clear Button -->
+    <div class="flex justify-center">
+      <button
+        (click)="clearCart()"
+        class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md text-sm font-semibold transition"
+      >
+        Clear
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
